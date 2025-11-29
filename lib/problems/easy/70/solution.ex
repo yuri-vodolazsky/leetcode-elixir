@@ -5,19 +5,20 @@ defmodule LeetcodeElixir.P70.Solution do
   """
 
   @spec climb_stairs(n :: integer) :: integer
-  # def climb_stairs(1), do: 1
-
-  # def climb_stairs(0), do: 0
-
   def climb_stairs(n) do
-    find(n, 0)
+    find(3, n, %{1 => 1, 2 => 2})
   end
 
-  def find(1, steps), do: steps + 1
+  def find(_i, 1, _map), do: 1
+  def find(_i, 2, _map), do: 2
 
-  def find(2, steps), do: steps + 1
+  def find(i, n, map) do
+    res = map[i - 1] + map[i - 2]
 
-  def find(n, steps) do
-    find(n - 1, steps) + find(n - 2, steps)
+    if i == n do
+      res
+    else
+      find(i + 1, n, Map.put(map, i, res))
+    end
   end
 end
